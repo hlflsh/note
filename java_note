@@ -35,3 +35,6 @@ public boolean equals(Object obj) {
 注意：将“==”操作符应用于包装类型比较的时候，其结果很可能会和预期的不符。
 
 e.自动装箱和自动拆箱aa
+
+2.js中以下值取反后为false:!null !"" !undefine !NaN !0 !true
+                为true:!{} ![] ......
