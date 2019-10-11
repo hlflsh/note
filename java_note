@@ -1,0 +1,37 @@
+1.基本类型和包装类型的区别
+a.包装类可以为null，而基本类型不可以
+原因：包装类型可以应用于 POJO 中,而基本数据类型不行,POJO 的英文全称是 Plain Ordinary Java Object，
+翻译一下就是，简单无规则的 Java 对象，只有属性字段以及 setter 和 getter 方法,数据传输对象 DTO（Data Transfer Object，
+泛指用于展示层与服务层之间的数据传输对象）、视图对象 VO（View Object，把某个页面的数据封装起来）、
+持久化对象 PO（Persistant Object，可以看成是与数据库中的表映射的 Java 对象）,
+POJO的属性必须要用包装类型:数据库的查询结果可能是 null，如果使用基本类型的话，因为要自动拆箱（将包装类型转为基本类型，
+比如说把 Integer 对象转换成 int 值），就会抛出 NullPointerException 的异常。
+
+b.包装类型可以用于泛型，而基本数据类型不可以
+原因：泛型不能使用基本类型，因为使用基本类型时会编译出错,因为泛型在编译时会进行类型擦除，最后只保留原始类型，
+而原始类型只能是 Object 类及其子类——基本类型是个特例
+
+c.基本类型比包装类型更高效
+原因：基本类型在栈中直接存储的具体数值，而包装类型则存储的是堆中的引用，很显然，相比较于基本类型而言，包装类型需要占用更多的内存空间。
+
+d.两个包装类型的值可以相同，但却不相等
+Integer chenmo = new Integer(10);
+Integer wanger = new Integer(10);
+
+System.out.println(chenmo == wanger); // false 判断的是其指向的地址是否相等
+System.out.println(chenmo.equals(wanger )); // true 是因为 equals 方法内部比较的是两个 int 值是否相等
+源码如下：
+private final int value;
+
+public int intValue() {
+    return value;
+}
+public boolean equals(Object obj) {
+    if (obj instanceof Integer) {
+        return value == ((Integer)obj).intValue();
+    }
+    return false;
+}
+注意：将“==”操作符应用于包装类型比较的时候，其结果很可能会和预期的不符。
+
+e.自动装箱和自动拆箱aa
